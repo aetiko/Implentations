@@ -14,9 +14,7 @@ insert into Person (id, email) values ('3', 'john@example.com');
 -- keeping only one unique email with the smallest id. 
 -- Note that you are supposed to write a DELETE statement and not a SELECT one.
 
--- select * from person;
-
--- delete from person
--- where id not in (
--- group by email having count(email)> 1
--- );
+DELETE p FROM Person as p,
+    Person as q 
+WHERE
+    p.id > q.id AND p.email = q.email;

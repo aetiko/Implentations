@@ -6,3 +6,5 @@ drop table if exists customers;
 drop table if exists employee;
 drop table if exists orders;
 drop table if exists person;
+drop table if exists courses;
+drop table if exists employees;
