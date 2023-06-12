@@ -1,7 +1,10 @@
 Create database if not exists Leetcode;
 use Leetcode;
 
-Create table If Not Exists Person (Id int, Email varchar(255));
+CREATE TABLE IF NOT EXISTS Person (
+    Id INT,
+    Email VARCHAR(255)
+);
 Truncate table Person;
 insert into Person (id, email) values ('1', 'john@example.com');
 insert into Person (id, email) values ('2', 'bob@example.com');
