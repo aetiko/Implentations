@@ -9,4 +9,5 @@ drop table if exists person;
 drop table if exists courses;
 drop table if exists employees;
 drop table if exists bonus;
+drop table if exists weather;
 
