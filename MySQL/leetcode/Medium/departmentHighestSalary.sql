@@ -22,5 +22,14 @@ insert into Department (id, name) values ('2', 'Sales');
 
 /* Write an SQL query to find employees who have the highest salary in each of the departments. */
 
-
-
+SELECT 
+    d.name AS Department, e.name AS Employee, salary
+FROM
+    Department AS d
+        JOIN
+    employee AS e ON d.id = e.departmentId
+WHERE
+    (departmentId , salary) IN (SELECT 
+            departmentId, MAX(salary)
+        FROM
+            employee group by departmentId);
