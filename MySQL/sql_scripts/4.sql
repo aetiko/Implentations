@@ -25,6 +25,11 @@ SELECT
 FROM
     dept_manager;
     
+SELECT 
+    COUNT(distinct dept_no)
+FROM
+    dept_emp;
+    
 -- sum()
 
 SELECT 
@@ -33,6 +38,13 @@ FROM
     salaries
 WHERE
     salary >= '100000';
+    
+SELECT 
+    SUM(salary)
+FROM
+    salaries
+WHERE
+    from_date > '1997-01-01';
 
 -- min()
 
@@ -40,6 +52,11 @@ SELECT
     MIN(salary)
 FROM
     salaries;
+    
+SELECT 
+    MIN(emp_no)
+FROM
+    employees;
 
 -- max()
 
@@ -47,13 +64,19 @@ SELECT
     MAX(salary)
 FROM
     salaries;
+    
+SELECT 
+    MAX(emp_no)
+FROM
+    employees;
 
 -- avg()
+-- added Round to know how to preview decimal places
 
 SELECT 
-    AVG(salary)
+    round(AVG(salary), 2)
 FROM
-    salaries;
+    salaries where from_date > '1997-01-01';
     
 -- order by clause
 
