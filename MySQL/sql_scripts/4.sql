@@ -1,7 +1,7 @@
 -- aggregate functions
 -- count()
 
- SELECT 
+SELECT 
     COUNT(DISTINCT first_name)
 FROM
     employees;
@@ -26,7 +26,7 @@ FROM
     dept_manager;
     
 SELECT 
-    COUNT(distinct dept_no)
+    COUNT(DISTINCT dept_no)
 FROM
     dept_emp;
     
@@ -74,9 +74,11 @@ FROM
 -- added Round to know how to preview decimal places
 
 SELECT 
-    round(AVG(salary), 2)
+    ROUND(AVG(salary), 2)
 FROM
-    salaries where from_date > '1997-01-01';
+    salaries
+WHERE
+    from_date > '1997-01-01';
     
 -- order by clause
 
@@ -141,7 +143,7 @@ FROM
     salaries
 WHERE
     salary > 120000
-GROUP BY emp_no, from_date, to_date
+GROUP BY emp_no , from_date , to_date
 ORDER BY emp_no;
 
 
@@ -162,7 +164,10 @@ GROUP BY first_name
 HAVING COUNT(first_name) < 200
 ORDER BY first_name DESC;
 
-select * from dept_emp;
+SELECT 
+    *
+FROM
+    dept_emp;
 
 SELECT 
     emp_no, COUNT(emp_no) AS emp_count

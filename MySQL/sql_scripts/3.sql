@@ -61,14 +61,16 @@ SELECT
 FROM
     employees
 WHERE
-    first_name = 'Denis' OR first_name = 'Elvis';
+    first_name = 'Denis'
+        OR first_name = 'Elvis';
 
 SELECT 
     *
 FROM
     employees
 WHERE
-    first_name = 'Kellie' OR first_name = 'Aruna';
+    first_name = 'Kellie'
+        OR first_name = 'Aruna';
     
 -- ADDING THE logical precedence
 
@@ -110,14 +112,14 @@ SELECT
 FROM
     employees
 WHERE
-    FIRST_NAME IN ('Denis', 'Elvis');
+    FIRST_NAME IN ('Denis' , 'Elvis');
     
 SELECT 
     *
 FROM
     employees
 WHERE
-    FIRST_NAME NOT IN ('John', 'Mark', 'Jacob');
+    FIRST_NAME NOT IN ('John' , 'Mark', 'Jacob');
     
 -- ADDING THE LIKE AND NOT LIKE
 
@@ -196,7 +198,7 @@ FROM
 WHERE
     hire_date BETWEEN '1990-01-01' AND '2000-01-01';
     
-    SELECT 
+SELECT 
     *
 FROM
     employees
@@ -245,7 +247,6 @@ SELECT
 FROM
     employees
 WHERE
--- <> ==== !=
     first_name <> 'Mark';
     
 SELECT 
@@ -280,5 +281,6 @@ FROM
 SELECT DISTINCT
     hire_date
 FROM
-    employees limit 1000;
+    employees
+LIMIT 1000;
 

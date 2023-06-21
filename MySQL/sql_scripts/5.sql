@@ -89,4 +89,16 @@ SELECT
 FROM
     departments_dup;
 
+alter table departments_dup drop column dept_manager;
+alter table departments_dup change column dept_no dept_no char(4) null;
+alter table departments_dup change column dept_name dept_name varchar(40) null;
+insert into departments_dup(dept_name) values ('Public Relations');
+DELETE FROM departments_dup 
+WHERE
+    dept_no = 'd002';
+
+SELECT 
+    *
+FROM
+    departments_dup;
 
