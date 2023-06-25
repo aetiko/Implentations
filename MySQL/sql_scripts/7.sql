@@ -72,3 +72,110 @@ WHERE
     last_name = 'Markovitch'
 ORDER BY d.dept_no DESC, e.emp_no;
 
+SELECT 
+    d.dept_no, m.emp_no, d.dept_name
+FROM
+    dept_manager_dup m
+        RIGHT JOIN
+    departments_dup d ON m.dept_no = d.dept_no
+ORDER BY d.dept_no ;
+
+SELECT 
+    e.emp_no, e.first_name, e.last_name, d.dept_no, e.hire_date
+FROM
+    employees e,
+    dept_emp d
+WHERE
+    e.emp_no = d.emp_no;
+    
+SELECT 
+    e.emp_no, e.first_name, e.last_name, d.dept_no, e.hire_date
+FROM
+    employees e
+        INNER JOIN
+    dept_emp d ON e.emp_no = d.emp_no;
+    
+SELECT 
+    e.emp_no, e.first_name, e.last_name, s.salary
+FROM
+    employees e
+        INNER JOIN
+    salaries s ON e.emp_no = s.emp_no where s.salary> 145000;
+    
+-- One of these values, ‘only_full_group_by’, 
+-- blocks certain type of group statements and that can potentially lead to Error Code 1055. 
+
+set @@global.sql_mode := replace(@@global.sql_mode, 'ONLY_FULL_GROUP_BY', '');
+-- if for some reason you’d like to disallow this behavior you can always execute the following command 
+-- which will do exactly the opposite: 
+-- it will add the “only_full_group_by” value to the expression.
+set @@global.sql_mode := concat('ONLY_FULL_GROUP_BY,', @@global.sql_mode);
+-- o adjust the relevant default settings, there is a system variable, called ‘sql_mode’, which needs to be reconfigured.
+-- In order to view the current value of this variable in your case, you have to execute the following command.
+select @@global.sql_mode;
+commit;
+
+SELECT 
+    e.first_name, e.last_name, e.hire_date, t.title
+FROM
+    employees e
+        JOIN
+    titles t ON e.emp_no = t.emp_no
+WHERE
+    e.first_name = 'Margareta'
+        AND e.last_name = 'Markovitch';
+        
+SELECT 
+    e.*, d.*
+FROM
+    departments d
+        CROSS JOIN
+    dept_manager dm
+        JOIN
+    employees e ON dm.emp_no = e.emp_no
+ORDER BY dm.emp_no , d.dept_no;
+
+SELECT 
+    dm.*, d.*
+FROM
+    dept_manager dm
+        CROSS JOIN
+    dept_emp d
+WHERE
+    d.dept_no = 'd009';
+    
+SELECT 
+    e.*, d.*
+FROM
+    employees e
+        CROSS JOIN
+    dept_emp d where e.emp_no < 10011;
+
+SELECT 
+    e.gender, ROUND(AVG(s.salary), 2) AS average_salary
+FROM
+    employees e
+        JOIN
+    salaries s ON e.emp_no = s.emp_no
+GROUP BY gender;
+
+-- more than 2 tables joined
+
+SELECT 
+    e.first_name,
+    e.last_name,
+    e.hire_date,
+    t.title,
+    m.from_date,
+    d.dept_name
+FROM
+    employees e
+        JOIN
+    dept_manager m ON e.emp_no = m.emp_no
+        JOIN
+    departments d ON m.dept_no = d.dept_no
+        JOIN
+    titles t ON e.emp_no = t.emp_no
+WHERE
+    t.title = 'Manager'
+ORDER BY e.emp_no;
