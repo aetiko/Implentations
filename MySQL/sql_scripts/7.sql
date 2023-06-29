@@ -50,8 +50,12 @@ FROM
 insert into dept_manager_dup values('110228', 'd003', '1992-03-21', '9999-01-01');
 insert into departments_dup values('d009', 'Customer Service');
 
-delete from dept_manager_dup where emp_no = '110228';
-delete from departments_dup where dept_no = 'd009';
+DELETE FROM dept_manager_dup 
+WHERE
+    emp_no = '110228';
+DELETE FROM departments_dup 
+WHERE
+    dept_no = 'd009';
 
 SELECT 
     m.dept_no, m.emp_no, d.dept_name
@@ -59,8 +63,9 @@ FROM
     dept_manager_dup m
         LEFT JOIN
     departments_dup d ON m.dept_no = d.dept_no
-    where dept_name is null
-ORDER BY m.dept_no ;
+WHERE
+    dept_name IS NULL
+ORDER BY m.dept_no;
 
 SELECT 
     e.emp_no, e.first_name, e.last_name, d.dept_no, d.from_date
@@ -70,7 +75,7 @@ FROM
     dept_manager d ON e.emp_no = d.emp_no
 WHERE
     last_name = 'Markovitch'
-ORDER BY d.dept_no DESC, e.emp_no;
+ORDER BY d.dept_no DESC , e.emp_no;
 
 SELECT 
     d.dept_no, m.emp_no, d.dept_name
@@ -78,7 +83,7 @@ FROM
     dept_manager_dup m
         RIGHT JOIN
     departments_dup d ON m.dept_no = d.dept_no
-ORDER BY d.dept_no ;
+ORDER BY d.dept_no;
 
 SELECT 
     e.emp_no, e.first_name, e.last_name, d.dept_no, e.hire_date
@@ -100,7 +105,9 @@ SELECT
 FROM
     employees e
         INNER JOIN
-    salaries s ON e.emp_no = s.emp_no where s.salary> 145000;
+    salaries s ON e.emp_no = s.emp_no
+WHERE
+    s.salary > 145000;
     
 -- One of these values, ‘only_full_group_by’, 
 -- blocks certain type of group statements and that can potentially lead to Error Code 1055. 
@@ -179,3 +186,64 @@ FROM
 WHERE
     t.title = 'Manager'
 ORDER BY e.emp_no;
+
+SELECT 
+    e.gender, COUNT(e.gender)
+FROM
+    employees e
+        JOIN
+    dept_manager d ON e.emp_no = d.emp_no
+GROUP BY e.gender;
+
+SELECT 
+    e.gender, COUNT(dm.emp_no)
+FROM
+    employees e
+        JOIN
+    dept_manager dm ON e.emp_no = dm.emp_no
+GROUP BY gender;
+
+drop table if exists employees_dup;
+create table employees_dup(
+	emp_no int(11),
+    birth_date date,
+    first_name varchar(14),
+    last_name varchar(16),
+    gender enum('M','F'),
+    hire_date date
+);
+
+ insert into employees_dup select e.* from employees e limit 20;
+ 
+ SELECT 
+    *
+FROM
+    employees_dup;
+    
+insert into employees_dup values ('10001', '1953-09-02', 'Georgi', 'Facello', 'M', '1986-06-26');
+
+-- Union all
+
+SELECT 
+    *
+FROM
+    (SELECT 
+        e.emp_no,
+            e.first_name,
+            e.last_name,
+            NULL AS dept_no,
+            NULL AS from_date
+    FROM
+        employees e
+    WHERE
+        last_name = 'Denis' UNION SELECT 
+        NULL AS emp_no,
+            NULL AS first_name,
+            NULL AS last_name,
+            dm.dept_no,
+            dm.from_date
+    FROM
+        dept_manager dm) AS a
+ORDER BY - a.emp_no DESC;
+
+
