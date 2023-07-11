@@ -45,4 +45,15 @@ begin
 end$$
 delimiter ;
 
-call employees.select_employees();
+call employees.average_employees_salary();
+
+drop procedure if exists average_employees_salary;
+delimiter $$
+create procedure average_employees_salary()
+begin  
+	select avg(salary) from salaries;
+end$$
+delimiter ;
+
+call employees.average_employees_salary();
+
