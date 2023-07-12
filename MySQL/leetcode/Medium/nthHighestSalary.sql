@@ -8,12 +8,12 @@ insert into Employee (id, salary) values ('2', '200');
 insert into Employee (id, salary) values ('3', '300');
 
 /* Write an SQL query to report the nth highest salary from the Employee table. If there is no nth highest salary, the query should report null. */
-
+delimiter $$
 CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
 BEGIN
-set N-1
+set n= n-1;
   RETURN (
       # Write your MySQL query statement below.
-      SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT N, 1
+      ifnull((SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT N, 1), NULL)
   );
-END
+END$$

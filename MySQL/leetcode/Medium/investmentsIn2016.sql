@@ -16,10 +16,9 @@ Round tiv_2016 to two decimal places. */
 
 
 SELECT 
-    *
+    i1.pid as pid
 FROM
-    Insurance
-WHERE
-    tiv_2015 <> tiv_2016
-GROUP BY lat or lon
-HAVING COUNT(lat and lon) = 1;
+    Insurance i1
+        JOIN
+    Insurance i2 ON i1.lat = i2.lat AND i1.lon = i2.lon
+        AND i1.pid != i2.pid;
