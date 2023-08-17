@@ -130,7 +130,7 @@ FROM
     titles t ON e.emp_no = t.emp_no
 WHERE
     e.first_name = 'Margareta'
-        AND e.last_name = 'Markovitch';
+        AND e.last_name = 'Markovitch's;
         
 SELECT 
     e.*, d.*
