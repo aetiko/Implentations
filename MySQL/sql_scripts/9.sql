@@ -44,6 +44,7 @@ begin
 	limit 1000;
 end$$
 delimiter ;
+call employees.select_employees();
 
 call employees.average_employees_salary();
 
@@ -111,7 +112,7 @@ SELECT @v_emp_no;
 drop function f_emp_avg_salary;
 delimiter $$
 create function f_emp_avg_salary(p_emp_no integer) returns decimal(10,2)
-Deterministic
+reads sql data
 begin
 declare v_avg_salary decimal(10,2);
 SELECT 
@@ -125,7 +126,7 @@ WHERE
 return v_avg_salary;
 end$$
 
-select employees.f_emp_avg_salary(90000);
+select employees.f_emp_avg_salary(9000);
 
 drop function f_emp_info;
 delimiter $$
