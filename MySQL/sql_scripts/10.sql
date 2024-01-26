@@ -1,6 +1,6 @@
 -- session variables--  
 set @s_var1 = 3;
-select @s_var1;
+SELECT @s_var1;
 
 -- Triggers --
 Use employees;
@@ -25,4 +25,34 @@ FROM
 WHERE
     emp_no = '10001';
 
-INSERT INTO salaries VALUES ('10001', -92891, '2010-06-22', '9999-01-01');
+INSERT INTO salaries VALUES ('10001', -92893, '2010-06-23', '8999-01-01');
+
+
+# BEFORE UPDATE
+DELIMITER $$
+
+CREATE TRIGGER trig_upd_salary
+BEFORE UPDATE ON salaries
+FOR EACH ROW
+BEGIN 
+	IF NEW.salary < 0 THEN 
+		SET NEW.salary = OLD.salary; 
+	END IF; 
+END $$
+
+DELIMITER ;
+
+UPDATE salaries 
+SET 
+    salary = 98765
+WHERE
+    emp_no = '10001'
+        AND from_date = '2010-06-22';
+        
+SELECT 
+    *
+FROM
+    salaries
+WHERE
+    emp_no = '10001'
+        AND from_date = '2010-06-22';
