@@ -1,0 +1,1 @@
+select * from employees where hire_date > '2000-01-01';
